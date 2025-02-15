@@ -1,5 +1,6 @@
 import PropertyDetails from "@/components/PropertyDetails";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
+import PropertyImages from "@/components/PropertyImages";
 import connectDB from "@/config/database";
 import Property, { IProperty } from "@/models/Property";
 import Link from "next/link";
@@ -17,11 +18,14 @@ async function PropertyPage({ params }: PropertyPageProps) {
   const { id } = await params
   await connectDB()
   const property = await Property.findById<IProperty>(id)
-  
+
+  if (!property) {
+    throw new Error('No property found')
+  }
 
   return ( 
     <>
-      <PropertyHeaderImage image={property?.images[0]}/>
+      <PropertyHeaderImage image={property.images[0]}/>
       <section>
         <div className="container m-auto py-6 px-6">
           <Link
@@ -39,6 +43,7 @@ async function PropertyPage({ params }: PropertyPageProps) {
           </div>
         </div>
       </section>
+      <PropertyImages images={property.images}/>
     </>
   );
 }

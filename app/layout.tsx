@@ -1,4 +1,5 @@
 import '@/assets/styles/globals.css'
+import AuthProvider from '@/components/AuthProvider';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 
@@ -10,15 +11,17 @@ export const metadata = {
 
 function MainLayout({ children }: any) {
   return (
-    <html>
-      <body>
-        <main>
-          <Navbar />
-          {children}
-          <Footer />
-        </main>
-      </body>
-    </html>
+    <AuthProvider>
+      <html>
+        <body>
+          <main>
+            <Navbar />
+            {children}
+            <Footer />
+          </main>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
 

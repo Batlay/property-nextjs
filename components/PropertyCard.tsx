@@ -34,11 +34,11 @@ interface Property {
   updatedAt: string,
 }
 
-type PageProps = {
+type Props = {
   property: Property
 }
 
-function PropertyCard({property}: PageProps) {
+function PropertyCard({property}: Props) {
 
    const getRateDisplay = () => {
     const { rates } = property;
@@ -54,7 +54,7 @@ function PropertyCard({property}: PageProps) {
   return ( 
     <div className='rounded-xl shadow-md relative'>
       <Image
-        src={`/images/properties/${property.images[0]}`}
+        src={property.images[0]}
         alt=''
         width='0'
         height='0'
