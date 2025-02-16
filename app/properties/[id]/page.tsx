@@ -6,21 +6,25 @@ import Property, { IProperty } from "@/models/Property";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 
-type PropertyPageProps = {
-  params: PropertyPageParams;
+type Props = {
+  params: Params;
 }
 
-type PropertyPageParams = {
+type Params = {
   id: string
 }
 
-async function PropertyPage({ params }: PropertyPageProps) {
+async function PropertyPage({ params }: Props) {
   const { id } = await params
   await connectDB()
   const property = await Property.findById<IProperty>(id)
 
   if (!property) {
-    throw new Error('No property found')
+    return ( 
+      <h1 className="text-center text-2xl font-bold mt-10">
+        Property not found
+      </h1>
+    )
   }
 
   return ( 

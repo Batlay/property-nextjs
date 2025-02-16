@@ -1,5 +1,4 @@
 'use server'
-
 import cloudinary from "@/config/cloudinary";
 import connectDB from "@/config/database";
 import Property, { IProperty } from "@/models/Property";
@@ -20,7 +19,6 @@ async function addProperty(formData: FormData) {
 
   const { userId } = sessionUser
 
-  const amenities = formData.getAll('amenities')
   const images = (formData
     .getAll('images') as File[])
     .filter((image) => image.name !== '')
@@ -47,32 +45,32 @@ async function addProperty(formData: FormData) {
   }
 
     const propertyData = {
-    owner: userId,
-    type: formData.get('type'),
-    name: formData.get('name'),
-    description: formData.get('description'),
-    location: {
-      street: formData.get('location.street'),
-      city: formData.get('location.city'),
-      state: formData.get('location.state'),
-      zipcode: formData.get('location.zipcode'),
-    },
-    beds: formData.get('beds'),
-    baths: formData.get('name'),
-    square_feet: formData.get('name'),
-    amenities,
-    rates: {
-      weekly: formData.get('rates.weekly'),
-      monthly: formData.get('rates.monthly'),
-      nightly: formData.get('rates.weekly')
-    },
-    seller_info: {
-      name: formData.get('seller_info.name'),
-      email: formData.get('seller_info.email'),
-      phone: formData.get('seller_info.phone'),
-    },
-    images: imageUrls,
-  }
+      owner: userId,
+      type: formData.get('type'),
+      name: formData.get('name'),
+      description: formData.get('description'),
+      location: {
+        street: formData.get('location.street'),
+        city: formData.get('location.city'),
+        state: formData.get('location.state'),
+        zipcode: formData.get('location.zipcode'),
+      },
+      beds: formData.get('beds'),
+      baths: formData.get('name'),
+      square_feet: formData.get('name'),
+      amenities: formData.getAll('amenities'),
+      rates: {
+        weekly: formData.get('rates.weekly'),
+        monthly: formData.get('rates.monthly'),
+        nightly: formData.get('rates.weekly')
+      },
+      seller_info: {
+        name: formData.get('seller_info.name'),
+        email: formData.get('seller_info.email'),
+        phone: formData.get('seller_info.phone'),
+      },
+      images: imageUrls,
+    }
 
   const newProperty: HydratedDocument<IProperty> = new Property(propertyData)
   await newProperty.save()

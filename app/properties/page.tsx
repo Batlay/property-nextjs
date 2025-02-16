@@ -1,7 +1,6 @@
 import PropertyCard from '@/components/PropertyCard';
 import connectDB from '@/config/database';
-import Property from '@/models/Property';
-import { IProperty } from '@/models/Property';
+import Property, { IProperty } from '@/models/Property';
 
 async function PropertiesPage() {
   await connectDB()
@@ -14,7 +13,7 @@ async function PropertiesPage() {
         {properties && 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           {properties.map(property => 
-            <PropertyCard key={property._id} property={property}/>
+            <PropertyCard key={property.createdAt} property={property}/>
           )}
         </div>
         }
