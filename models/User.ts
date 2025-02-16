@@ -1,10 +1,10 @@
-import { Schema, Types, model, models } from 'mongoose'
+import { ObjectId, Schema, Types, model, models } from 'mongoose'
 
 export interface IUser {
   email: string,
   username: string,
   image: string,
-  bookmarks: Types.ObjectId,
+  bookmarks: Types.Array<Types.ObjectId>,
 }
 
 const UserSchema = new Schema<IUser>({
